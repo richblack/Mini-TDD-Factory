@@ -21,15 +21,28 @@ if [ ! -f "$CONFIG_FILE" ]; then
     echo "1) JavaScript (Node.js) [預設]"
     echo "2) Python"
     echo "3) Golang"
-    read -p "請輸入選項 (1-3): " lang_choice
+    echo "4) 其他 (自定義)"
+    read -p "請輸入選項 (1-4): " lang_choice
 
     case "$lang_choice" in
-        2) LANG_VAL="python" ;;
-        3) LANG_VAL="go" ;;
-        *) LANG_VAL="javascript" ;;
+        2) 
+            LANG_VAL="python" 
+            ;;
+        3) 
+            LANG_VAL="go" 
+            ;;
+        4)
+            read -p "請輸入語言名稱 (例如 rust, ruby, c++): " custom_lang
+            LANG_VAL="$custom_lang"
+            read -p "請輸入測試指令 (例如 'cargo test', 'cucumber'): " custom_cmd
+            echo "TEST_CMD=$custom_cmd" >> "$CONFIG_FILE"
+            ;;
+        *) 
+            LANG_VAL="javascript" 
+            ;;
     esac
 
-    echo "SCOPE=All" > "$CONFIG_FILE"
+    echo "SCOPE=All" >> "$CONFIG_FILE"
     echo "LANGUAGE=$LANG_VAL" >> "$CONFIG_FILE"
     echo -e "${GREEN}✅ 設定已儲存：使用 $LANG_VAL 開發。${NC}"
 fi
@@ -37,10 +50,19 @@ fi
 # 讀取設定 (如果變數不存在則使用預設值)
 SCOPE=$(grep "SCOPE=" "$CONFIG_FILE" | cut -d'=' -f2 || echo "All")
 LANGUAGE=$(grep "LANGUAGE=" "$CONFIG_FILE" | cut -d'=' -f2 || echo "javascript")
+# 讀取自定義測試指令
+CONFIG_TEST_CMD=$(grep "TEST_CMD=" "$CONFIG_FILE" | cut -d'=' -f2)
 DESIGN_FILE="RFP/design.md"
 
 # 檢查相依性與環境設定
 setup_environment() {
+    # 如果設定檔中有指定測試指令，直接使用
+    if [ -n "$CONFIG_TEST_CMD" ]; then
+        TEST_CMD="$CONFIG_TEST_CMD"
+        echo -e "${YELLOW}🔧 使用自定義測試指令: $TEST_CMD${NC}"
+        return
+    fi
+
     case "$LANGUAGE" in
         javascript)
             if ! command -v npx &> /dev/null; then
@@ -83,8 +105,15 @@ setup_environment() {
             TEST_CMD="godog run"
             ;;
         *)
-            echo "❌ 錯誤: 不支援的語言 '$LANGUAGE'。請設定為 javascript, python 或 go。"
-            exit 1
+            echo -e "${YELLOW}⚠️  警告: 未知語言 '$LANGUAGE' 且未設定測試指令。${NC}"
+            echo "請手動在 factory_config.txt 中設定 TEST_CMD=你的測試指令"
+            read -p "或現在輸入測試指令 (例如 'cargo test'): " manual_cmd
+            if [ -n "$manual_cmd" ]; then
+                TEST_CMD="$manual_cmd"
+            else
+                echo "❌ 無法繼續。"
+                exit 1
+            fi
             ;;
     esac
 }
