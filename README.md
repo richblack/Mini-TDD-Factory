@@ -16,7 +16,28 @@
 
 這就是 **Mini TDD Factory**。
 
+
+## 🏆 給管理者/助教：如何設定為 Template
+如果您希望學員能直接使用這個 Repo 作為專案模板，請執行以下步驟：
+
+1. 將此專案 Push 到 GitHub。
+2. 進入 GitHub Repo 頁面，點擊 **Settings** (設定)。
+3. 在 General 頁面中，勾選 **Template repository**。
+4. 完成！
+
+---
+
 ## 📦 如何使用 (給學員的懶人包)
+
+### 方法一：GitHub Template (推薦)
+如果助教已經將此 Repo 設為 Template：
+1. 在 GitHub 頁面點擊綠色的 **"Use this template"** 按鈕。
+2. 選擇 **"Create a new repository"**。
+3. 把你新建立的 Repo Clone 到電腦上。
+4. 執行重置腳本：`./reset_project.sh`。
+
+### 方法二：直接下載
+如果不使用 GitHub Template：
 
 ### 第一步：準備環境
 請確保你的電腦已經安裝：
