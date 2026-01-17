@@ -19,27 +19,27 @@
 
 ## 📦 如何使用 (給學員的懶人包)
 
-### 方法一：使用 Template (推薦)
-1. 點擊本頁面上方的綠色按鈕 **"Use this template"** -> **"Create a new repository"**。
-2. 建立屬於你自己的 Repo。
-3. 把你的新 Repo Clone 到電腦上。
-4. 執行重置腳本：`./reset_project.sh`。
-
-### 方法二：直接下載 ZIP
-
-### 第一步：準備環境
+### 第一步：準備環境 (必做)
 請確保你的電腦已經安裝：
 1. **Node.js**: [下載安裝](https://nodejs.org/)
 2. **Gemini CLI**: 這是 AI 的大腦，請確認已安裝並設定好。
 
-### 第二步：下載專案
-```bash
-git clone https://github.com/richblack/Mini-TDD-Factory.git
-cd Mini-TDD-Factory
-```
-*(或者直接下載 ZIP 解壓縮)*
+### 第二步：取得專案 (二選一)
 
-### 第三步：開始新專案
+#### 方法 A：使用 Template (推薦)
+1. 點擊本頁面上方的綠色按鈕 **"Use this template"** -> **"Create a new repository"**。
+2. 建立屬於你自己的 Repo。
+3. 把你的新 Repo Clone 到電腦上。
+
+#### 方法 B：直接下載
+1. 開啟終端機 (Terminal)。
+2. 執行指令：
+   ```bash
+   git clone https://github.com/richblack/Mini-TDD-Factory.git
+   cd Mini-TDD-Factory
+   ```
+
+### 第三步：初始化專案
 我們提供了一個「一鍵重置」指令，幫你把範例清乾淨：
 ```bash
 ./reset_project.sh
@@ -56,9 +56,16 @@ cd Mini-TDD-Factory
    - [ ] 實作轉換計算
    - [ ] 顯示結果
 
-### 第六步 (進階)：語言與設計
-- **首次啟動時**：`factory.sh` 會問你要用什麼語言 (JS/Python/Go)，選一個你喜歡的即可。AI 會自動處理細節。
-- **RFP/design.md**：如果你有特定的技術要求（例如：「請使用 OOP 設計」或「資料庫使用 SQLite」），可以寫在這個檔案裡，AI 會參考它來寫程式。
+### 第五步：選擇語言 (首次啟動)
+我們支援 **JavaScript**, **Python**, **Go**。
+當你第一次執行工廠時，它會問你要用哪一種語言，選一個你熟悉的即可 (或者你想學的)。
+*如果你有更進階的技術要求 (例如資料庫規格)，可以寫在 `RFP/design.md`。*
+
+### 第六步：啟動工廠
+在終端機輸入：
+```bash
+./factory.sh
+```
 
 ### 第五步：啟動工廠
 在終端機輸入：
