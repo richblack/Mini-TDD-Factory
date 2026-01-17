@@ -1,0 +1,12 @@
+{
+    "name": "minimal-factory-test",
+    "version": "1.0.0",
+    "description": "簡易版 Gemini 自動化軟體工廠測試環境",
+    "main": "calculator.js",
+    "scripts": {
+        "test": "cucumber-js"
+    },
+    "dependencies": {
+        "@cucumber/cucumber": "^10.0.0"
+    }
+}
