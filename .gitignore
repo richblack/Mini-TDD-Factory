@@ -1,0 +1,13 @@
+# System
+.DS_Store
+
+# Logs
+*.log
+test_report.log
+
+# Dependencies
+node_modules/
+__pycache__/
+
+# Course Material (Ignored)
+course/
