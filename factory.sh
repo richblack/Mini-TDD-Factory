@@ -116,6 +116,32 @@ setup_environment() {
             fi
             ;;
     esac
+    # 檢查 gemini CLI
+    if ! command -v gemini &> /dev/null; then
+        echo -e "${RED}❌ 錯誤: 找不到 'gemini' 指令。${NC}"
+        echo "這通常是因為："
+        echo "1. 尚未安裝 (請執行 npm install -g @google/generative-ai 或類似指令)"
+        echo "2. 未設定 PATH"
+        echo -e "${YELLOW}👉 嘗試自動修正 (假設是 Node環境)...${NC}"
+        
+        if command -v npm &> /dev/null; then
+            read -p "是否嘗試用 npm 安裝 @google/generative-ai? (y/n): " install_choice
+            if [[ "$install_choice" == "y" || "$install_choice" == "Y" ]]; then
+                npm install -g @google/generative-ai
+                # 再次檢查
+                if ! command -v gemini &> /dev/null; then
+                     echo -e "${RED}❌ 安裝失敗或仍找不到指令。請手動修復。${NC}"
+                     exit 1
+                fi
+            else
+                echo "❌ 無法繼續。"
+                exit 1
+            fi
+        else
+            echo "❌ 找不到 npm。請手動安裝 gemini CLI。"
+            exit 1
+        fi
+    fi
 }
 
 setup_environment
@@ -189,6 +215,23 @@ do
         "
     fi
 
+    # Dual AI Mode: Supervisor Checkpoint
+    # 如果是雙 AI 模式且測試失敗，暫停讓 Supervisor (人類) 決定是否插手
+    MODE=$(grep "MODE=" "$CONFIG_FILE" | cut -d'=' -f2)
+    
+    if [[ "$MODE" == "Dual" ]]; then
+        echo -e "${BLUE}🕵️ [Dual AI Mode] Supervisor Checkpoint${NC}"
+        if [ $TEST_EXIT_CODE -ne 0 ]; then
+             echo -e "${RED}⚠️ 測試失敗。Supervisor (您) 可以現在檢查代碼並手動修復，或者按 Enter 讓 Worker 繼續嘗試。${NC}"
+             read -p "按 Enter 繼續，或 Ctrl+C 停止..."
+        fi
+        
+        # 修改 Prompt 以適應 Worker 角色
+        WORKER_PROMPT="[角色設定] 你是 Worker Agent，負責執行 Supervisor (人類) 的戰術指令。請專注於通過測試，不要質疑架構。"
+    else
+        WORKER_PROMPT=""
+    fi
+
     # 5. 呼叫 Gemini
     echo "🤖 呼叫 Gemini (YOLO)..."
     
@@ -202,6 +245,7 @@ do
     fi
     
     gemini --yolo "
+    $WORKER_PROMPT
     你是軟體工廠中的 AI 工程師 (第 $ROUND 輪)。
     目前指定的開發語言是：**$LANGUAGE**。
     請使用 **繁體中文** 進行思考與回覆，程式碼註解也請使用繁體中文。

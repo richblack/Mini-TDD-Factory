@@ -1,5 +1,4 @@
-# 任務列表
+# 任務列表 (Tasks)
 
-- [x] 實作加法功能 (Addition)
-- [x] 實作減法功能 (Subtraction)
-- [x] 實作輸入驗證功能 (Input Validation)
+- [ ] 實作加法 (Add) <!-- id: 1 -->
+- [ ] 實作減法 (Subtract) <!-- id: 2 -->

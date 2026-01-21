@@ -1,7 +1,3 @@
-# 簡易工廠設定檔
-# 選項: "All" (全部) 或指定標籤如 "@sprint1"
 SCOPE=All
-
-# 程式語言設定
-# 選項: javascript, python, go
 LANGUAGE=javascript
+MODE=Single
