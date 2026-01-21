@@ -1,5 +1,5 @@
-# 任務列表
-
-- [x] 實作加法功能 (Addition)
-- [x] 實作減法功能 (Subtraction)
-- [x] 實作輸入驗證功能 (Input Validation)
+- [ ] Implement `CalibrationService` (Generate Questions) <!-- id: 5 -->
+- [ ] Implement `ConsistencyJudge` (LLM-based comparison logic) <!-- id: 6 -->
+- [ ] Implement `POST /calibration/verify` API <!-- id: 7 -->
+- [ ] Setup `PostgreSQL` connection (GORM or sqlx) <!-- id: 8 -->
+- [ ] Implement `UserRepository` to save verified profiles <!-- id: 9 -->

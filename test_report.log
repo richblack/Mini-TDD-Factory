@@ -1,5 +1,106 @@
-.........
+=== RUN   TestFeatures
+[1;37mFeature:[0m Agent Interview Loop
+  In order to verify the core agent interaction logic,
+  the developer needs to be able to run a simulated interview loop.
+=== RUN   TestFeatures/Successfully_run_an_interview_loop
 
-3 scenarios (3 passed)
-9 steps (9 passed)
-0m00.009s (executing steps: 0m00.000s)
+  [1;37mScenario:[0m Successfully run an interview loop                          [1;30m# ../agent_loop.feature:6[0m
+    [32mGiven[0m [32ma defined Persona DNA[0m                                         [1;30m# steps_test.go:218 -> *testContext[0m
+    [32mWhen[0m [32mthe InterviewService runs an interview loop for this DNA[0m       [1;30m# steps_test.go:219 -> *testContext[0m
+    [32mThen[0m [32mthe returned conversation should have 5 rounds[0m                 [1;30m# steps_test.go:220 -> *testContext[0m
+    [32mAnd[0m [32mthe conversation should start with a message from "Interviewer"[0m [1;30m# steps_test.go:221 -> *testContext[0m
+=== RUN   TestFeatures/Handle_empty_DNA
+
+  [1;37mScenario:[0m Handle empty DNA                                     [1;30m# ../agent_loop.feature:12[0m
+    [32mGiven[0m [32mthe Persona DNA is empty[0m                               [1;30m# steps_test.go:222 -> *testContext[0m
+    [32mWhen[0m [32mthe InterviewService attempts to run the interview loop[0m [1;30m# steps_test.go:223 -> *testContext[0m
+    [32mThen[0m [32man error should be returned[0m                             [1;30m# steps_test.go:224 -> *testContext[0m
+
+[1;37mFeature:[0m Gin Server Startup and Basic Health Check
+=== RUN   TestFeatures/Server_should_start_successfully_and_respond_to_health_check
+[GIN] 2026/01/21 - 16:40:47 | 200 |      40.166µs |                 | GET      "/health"
+
+  [1;37mScenario:[0m Server should start successfully and respond to health check [1;30m# ../gin_server.feature:3[0m
+    [32mWhen[0m [32mI send a GET request to "/health"[0m                               [1;30m# steps_test.go:206 -> *testContext[0m
+    [32mThen[0m [32mthe response code should be 200[0m                                 [1;30m# steps_test.go:207 -> *testContext[0m
+    [32mAnd[0m [32mthe response content should be "OK"[0m                              [1;30m# steps_test.go:208 -> *testContext[0m
+
+[1;37mFeature:[0m Persona DNA Ingestion API
+=== RUN   TestFeatures/Successfully_ingest_a_valid_Persona_DNA
+
+  [1;37mScenario:[0m Successfully ingest a valid Persona DNA                       [1;30m# ../persona_ingestion.feature:3[0m
+    [32mGiven[0m [32mI have a valid Persona DNA JSON request[0m                         [1;30m# steps_test.go:211 -> *testContext[0m
+      [36m"""[0m
+      [36m{[0m
+      [36m  "core_identity": {[0m
+      [36m    "mbti": "INTJ",[0m
+      [36m    "big_five": {[0m
+      [36m      "openness": 0.8,[0m
+      [36m      "conscientiousness": 0.7,[0m
+      [36m      "extraversion": 0.3,[0m
+      [36m      "agreeableness": 0.4,[0m
+      [36m      "neuroticism": 0.2[0m
+      [36m    },[0m
+      [36m    "values": ["freedom", "innovation"][0m
+      [36m  },[0m
+      [36m  "values_and_beliefs": {[0m
+      [36m    "religious_beliefs": "none",[0m
+      [36m    "political_leanings": "centrist"[0m
+      [36m  }[0m
+      [36m}[0m
+      [36m"""[0m
+[GIN] 2026/01/21 - 16:40:47 | 200 |     195.125µs |                 | POST     "/api/v1/persona/ingest"
+    [32mWhen[0m [32mI send a POST request to "/api/v1/persona/ingest" with that JSON[0m [1;30m# steps_test.go:214 -> *testContext[0m
+    [32mThen[0m [32mthe response code should be 200[0m                                  [1;30m# steps_test.go:207 -> *testContext[0m
+    [32mAnd[0m [32mthe response contains "persona_id"[0m                                [1;30m# steps_test.go:215 -> *testContext[0m
+
+[1;37mFeature:[0m Persona DNA PII Validation
+=== RUN   TestFeatures/Reject_Persona_DNA_containing_an_email
+
+  [1;37mScenario:[0m Reject Persona DNA containing an email                        [1;30m# ../pii_validation.feature:3[0m
+    [32mGiven[0m [32mI have a Persona DNA JSON request with PII (email)[0m              [1;30m# steps_test.go:212 -> *testContext[0m
+      [36m"""[0m
+      [36m{[0m
+      [36m  "core_identity": {[0m
+      [36m    "mbti": "INTJ",[0m
+      [36m    "email": "test@example.com"[0m
+      [36m  },[0m
+      [36m  "values_and_beliefs": {[0m
+      [36m    "religious_beliefs": "none"[0m
+      [36m  }[0m
+      [36m}[0m
+      [36m"""[0m
+[GIN] 2026/01/21 - 16:40:47 | 400 |      22.417µs |                 | POST     "/api/v1/persona/ingest"
+    [32mWhen[0m [32mI send a POST request to "/api/v1/persona/ingest" with that JSON[0m [1;30m# steps_test.go:214 -> *testContext[0m
+    [32mThen[0m [32mthe response code should be 400[0m                                  [1;30m# steps_test.go:207 -> *testContext[0m
+=== RUN   TestFeatures/Reject_Persona_DNA_containing_a_phone_number
+
+  [1;37mScenario:[0m Reject Persona DNA containing a phone number                  [1;30m# ../pii_validation.feature:19[0m
+    [32mGiven[0m [32mI have a Persona DNA JSON request with PII (phone number)[0m       [1;30m# steps_test.go:213 -> *testContext[0m
+      [36m"""[0m
+      [36m{[0m
+      [36m  "core_identity": {[0m
+      [36m    "mbti": "ENTP",[0m
+      [36m    "phone": "123-456-7890"[0m
+      [36m  },[0m
+      [36m  "values_and_beliefs": {[0m
+      [36m    "political_leanings": "liberal"[0m
+      [36m  }[0m
+      [36m}[0m
+      [36m"""[0m
+[GIN] 2026/01/21 - 16:40:47 | 400 |      19.459µs |                 | POST     "/api/v1/persona/ingest"
+    [32mWhen[0m [32mI send a POST request to "/api/v1/persona/ingest" with that JSON[0m [1;30m# steps_test.go:214 -> *testContext[0m
+    [32mThen[0m [32mthe response code should be 400[0m                                  [1;30m# steps_test.go:207 -> *testContext[0m
+
+6 scenarios ([32m6 passed[0m)
+20 steps ([32m20 passed[0m)
+3.282875ms
+--- PASS: TestFeatures (0.00s)
+    --- PASS: TestFeatures/Successfully_run_an_interview_loop (0.00s)
+    --- PASS: TestFeatures/Handle_empty_DNA (0.00s)
+    --- PASS: TestFeatures/Server_should_start_successfully_and_respond_to_health_check (0.00s)
+    --- PASS: TestFeatures/Successfully_ingest_a_valid_Persona_DNA (0.00s)
+    --- PASS: TestFeatures/Reject_Persona_DNA_containing_an_email (0.00s)
+    --- PASS: TestFeatures/Reject_Persona_DNA_containing_a_phone_number (0.00s)
+PASS
+ok  	factory/features/steps	(cached)
