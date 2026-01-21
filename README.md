@@ -30,7 +30,19 @@
 2. **Gemini CLI**: 這是 AI 的大腦，請確認已安裝並設定好。
 
 ### 第二步：取得專案 (二選一)
-**(略：同原版 README)**
+
+#### 方法 A：使用 Template (推薦)
+1. 點擊本頁面上方的綠色按鈕 **"Use this template"** -> **"Create a new repository"**。
+2. 建立屬於你自己的 Repo。
+3. 把你的新 Repo Clone 到電腦上。
+
+#### 方法 B：直接下載
+1. 開啟終端機 (Terminal)。
+2. 執行指令：
+   ```bash
+   git clone https://github.com/richblack/Mini-TDD-Factory.git
+   cd Mini-TDD-Factory
+   ```
 
 ### 第三步：設定模式
 編輯 `factory_config.txt`：
