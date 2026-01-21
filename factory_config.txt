@@ -1,7 +1,17 @@
-# 簡易工廠設定檔
-# 選項: "All" (全部) 或指定標籤如 "@sprint1"
+# Mini TDD Factory 設定檔
+
+# 開發範圍 (預設 All)
 SCOPE=All
 
-# 程式語言設定
-# 選項: javascript, python, go
+# 開發語言
+# 選項: javascript, python, go, universal
+# 若要用其他語言，請參考 README 設定通用模式
 LANGUAGE=javascript
+
+# 運作模式
+# Single: YOLO 模式 (自動重試，適合掛機)
+# Dual:   Supervisor 模式 (失敗時暫停，適合人工介入)
+MODE=Single
+
+# 自定義測試指令 (選填)
+# TEST_CMD=npm test

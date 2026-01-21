@@ -16,6 +16,11 @@
 
 這就是 **Mini TDD Factory**。
 
+## 🆕 2026.01 新增功能
+*   **Gemini 自動檢查**: 再也不用怕跑到一半發現沒裝 CLI。
+*   **Dual AI Mode (Supervisor 模式)**: 讓人類監控者隨時插手，解決 AI 鬼打牆的問題。
+
+---
 
 ## 📦 如何使用 (懶人包)
 
@@ -39,8 +44,22 @@
    cd Mini-TDD-Factory
    ```
 
-### 第三步：初始化專案
-怕你想要測試一下，付了一個簡單計算機的開發需求，你可以直接執行 factory.sh 看看效果。
+### 第三步：設定與初始化 (重要)
+
+#### 1. 設定工作模式
+編輯 `factory_config.txt`：
+```text
+SCOPE=All
+LANGUAGE=go
+MODE=Dual
+```
+*   `MODE=Dual`: **Supervisor 模式**。這是為了配合 **Agentic IDE (如 Cursor, Windsurf, Gemini Code Assist)** 設計的。
+    *   **角色分配**: `factory.sh` 裡的 Gemini 是 **Worker** (埋頭苦幹)。IDE 裡的 AI (或人類) 是 **Supervisor** (負責決策)。
+    *   **機制**: 測試失敗時，工廠會暫停。這時 Supervisor (你或是你的 IDE Agent) 可以檢查代碼、給予 Worker 新提示，或直接修復，然後按 Enter 繼續。
+*   `MODE=Single`: (預設) **YOLO 模式**。工廠會無限重試直到成功，適合去睡覺時掛機。
+
+#### 2. 重置專案 (可選)
+怕你想要測試一下，附了一個簡單計算機的開發需求，你可以直接執行 factory.sh 看看效果。
 但你會要寫自己的專案，提供一個「一鍵重置」指令，幫你把範例清乾淨：
 ```bash
 ./reset_project.sh
@@ -85,6 +104,7 @@
 
 **Q: 工廠卡住了怎麼辦？**
 A: 按 `Ctrl + C` 停止，檢查你的 `requirements.md` 寫得夠不夠清楚，然後重新執行 `./factory.sh`。
+如果你開啟了 `MODE=Dual`，它會在失敗時自動暫停等你指令。
 
 **Q: 我需要自己寫測試嗎？**
 A: **不需要！** 只要你的任務和需求寫得夠好，AI 會自動幫你產生測試 (TDD)。當然，如果你想自己寫 Gherkin 也是可以的。
