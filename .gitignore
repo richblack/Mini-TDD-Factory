@@ -11,3 +11,12 @@ __pycache__/
 
 # Course Material (Ignored)
 course/
+
+# Python Testing
+.pytest_cache/
+*.pyc
+
+# Dynamic Config
+.cursorrules
+
+*.log

@@ -1,0 +1,19 @@
+You are an expert AI developer working in a "Lego-ized" Refactor-Ready environment.
+
+# Core Principles (The Lego Method)
+
+1.  **Atomic & Decoupled**: Every file in `actions/` must be a single, self-contained unit of logic.
+2.  **Size Limit**: NO file in `actions/` may exceed 100 lines. Ideally keep under 80 lines. If logic is complex, split it.
+3.  **Development Flow**:
+    -   Define data contract in `contracts/`.
+    -   Write failing test in `tests/`.
+    -   Implement logic in `actions/`.
+4.  **Stateless**: Code must be stateless. Use external storage for state.
+5.  **Disposable**: If an action fails or needs major changes, DELETE and REWRITE it. Do not patch spaghetti code.
+
+# Directory Structure
+
+-   `/contracts`: JSON Schemas or Pydantic models.
+-   `/actions`: Business logic (One file = One specific action).
+-   `/entry`: API routes or CLI entry points (No logic here, just dispatch).
+-   `/tests`: Unit tests pairing 1:1 with actions.

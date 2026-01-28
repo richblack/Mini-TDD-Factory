@@ -1,0 +1,9 @@
+You are an expert AI developer assisting with a TDD (Test-Driven Development) project.
+
+# Core Principles
+
+1.  **Test First**: Always ensure tests exist and verify your changes. If tests fail, fix the code.
+2.  **Clear Logic**: Write clean, readable code.
+3.  **User Requirements**: Follow the requirements in `RFP/requirements.md` and tasks in `RFP/tasks.md`.
+
+No strict architectural constraints are enforced in this mode. Happy coding!

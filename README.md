@@ -1,62 +1,99 @@
-# 🏭 Mini TDD Factory (迷你 AI 軟體工廠)
+# 🏭 Mini TDD Factory (樂高版)
 
-這是一個超簡單自動化開發工具，Claude Code 有官方支援，本專案讓你用 Gemini CLI 也能做一樣的事。
-你不需要很會寫程式，只要負責「許願」(寫需求)，AI 就會幫你「寫功能」並且「自我檢查」！
+> **「這是你的保命招式，壞了就換，不用修。」**
 
-本專案由 AI (Gemini + Antigravity) 協助開發，致敬《Ralph Wiggum》的無腦快樂開發精神。
+這是一個專為 AI 協作設計的「解耦重構 (Refactor-Ready)」GitHub 模板。
+結合了 TDD Factory 的自動化精神與「樂高法 (Lego Methodology)」架構，讓你可以與 AI (如 Gemini, Claude, Cursor) 高效合作，且不用擔心程式碼變成無法維護的義大利麵。
 
 ---
 
-## 🚀 這是什麼？
+## 🧱 核心哲學：樂高法 (The Lego Method)
 
-想像你有一個不知疲倦的 AI 實習生：
-1. 你告訴他要做什麼 (寫在需求檔)。
-2. 你列出任務清單 (寫在任務檔)。
-3. **他會自動幫你寫測試、寫程式、修正錯誤，直到全部完成。**
+在 AI 時代，**重寫的成本比除錯還低**。
+我們不再維護幾千行的巨大檔案，而是把程式碼拆成一個個小積木 (Parts)。
 
-這就是 **Mini TDD Factory**。
+1.  **壞了就換 (Disposable)**：如果一個功能 (Action) 壞了或寫得太爛，直接刪掉重寫，完全不用心痛。
+2.  **一檔一事 (Atomic)**：每個檔案只做一件事，長度嚴格控制在 100 行以內。
+3.  **契約先行 (Contracts First)**：先定義資料結構，再寫測試，最後才實作。
 
-## 🆕 2026.01 新增功能
+## 📂 專案結構 (The Box)
+
+這個盒子裡有四個格子，請嚴格遵守分類：
+
+```text
+/
+├── contracts/  # 📜 說明書：定義資料輸入輸出 (Schema)
+├── tests/      # 🧪 測試儀：驗證積木是否合格 (Tests)
+├── actions/    # 🧱 積木區：核心邏輯，每個檔案就像一塊樂高 (Logic)
+└── entry/      # 🔌 接頭：API 路由或 CLI 指令 (Entry Points)
+```
+
+## 🚀 快速開始 (Lego Mode)
+
+### 1. 安裝環境
+確保你有 Python 3，然後安裝依賴：
+```bash
+pip install -r requirements.txt
+```
+
+### 2. 選擇開發模式 (必選)
+
+本模板提供兩種 AI 開發模式，請依需求選擇：
+
+**🧱 樂高模式 (Lego Mode)** - *推薦用於重構或精密開發*
+AI 會嚴格遵守「一檔一事」與「解耦」規範，適合建立高品質、易維護的軟體。
+```bash
+sh mode_lego.sh
+```
+
+**🚀 標準模式 (Standard Mode)** - *推薦用於快速原型或簡單腳本*
+AI 沒有架構限制，自由發揮。適合 TDD Factory 原本的快速開發流程。
+```bash
+sh mode_standard.sh
+```
+
+### 3. 體驗範例 (Calculator)
+我們已經預放了一塊積木 (`calculate`) 給你玩玩看，這是一個簡單的加減法計算機：
+```bash
+pytest
+```
+如果看到綠色的 `PASSED`，代表你的樂高工廠運轉正常！
+
+### 4. 開始堆積木 (如何開發)
+
+當你要做新功能時，請依照這個順序告訴 AI：
+
+1.  **定義契約**：在 `contracts/` 新增一個 Schema (例如 `product_schema.json`)。
+2.  **寫下測試**：在 `tests/` 新增一個測試 (例如 `test_create_product.py`)。讓它先失敗 (Red)。
+3.  **製作積木**：在 `actions/` 實作邏輯 (例如 `create_product.py`)。讓測試通過 (Green)。
+4.  **組裝**：在 `entry/` 呼叫這個 Action。
+
+> 💡 **小撇步**：本專案內建 `.cursorrules` 與 `AI_RULES.md`。如果你使用 Cursor 或其他 AI 工具，它們會自動讀取這些規則，並幫你寫出符合樂高標準的程式碼。
+
+---
+
+## 🕹️ 經典 TDD Factory 使用說明 (Standard Mode)
+
+如果你選擇 `mode_standard.sh`，你可以使用原本的 `factory.sh` 自動化腳本。以下是 2026.01 的最新功能與設定方式。
+
+### ✨ 新增功能 (2026.01)
 *   **Gemini 自動檢查**: 再也不用怕跑到一半發現沒裝 CLI。
-*   **Dual AI Mode (Supervisor 模式)**: 讓人類監控者隨時插手，解決 AI 鬼打牆的問題。
-
----
-
-## 📦 如何使用 (懶人包)
-
-### 第一步：準備環境 (必做)
-請確保你的電腦已經安裝：
-1. **Node.js**: [下載安裝](https://nodejs.org/)
-2. **Gemini CLI**: 這是 AI 的大腦，請確認已安裝並設定好。
-
-### 第二步：取得專案 (二選一)
-
-#### 方法 A：使用 Template (推薦)
-1. 點擊本頁面上方的綠色按鈕 **"Use this template"** -> **"Create a new repository"**。
-2. 建立屬於你自己的 Repo。
-3. 把你的新 Repo Clone 到電腦上。
-
-#### 方法 B：直接下載
-1. 開啟終端機 (Terminal)。
-2. 執行指令：
-   ```bash
-   git clone https://github.com/richblack/Mini-TDD-Factory.git
-   cd Mini-TDD-Factory
-   ```
-
-### 第三步：設定與初始化 (重要)
+*   **Dual AI Mode (Supervisor 模式)**: 讓人類監控者隨時插手，解決 AI### 第三步：設定與初始化 (重要)
 
 #### 1. 設定工作模式
-編輯 `factory_config.txt`：
-```text
-SCOPE=All
-LANGUAGE=go
+編輯 `factory_config.md` (已預先建立)：
+此檔案是 Markdown 格式，方便閱讀，請只修改 `=` 後面的數值。
+
+```markdown
+# Mini TDD Factory 設定檔
+LANGUAGE=python
 MODE=Dual
+LEGO_MODE=true
 ```
-*   `MODE=Dual`: **Supervisor 模式**。這是為了配合 **Agentic IDE (如 Cursor, Windsurf, Gemini Code Assist)** 設計的。
-    *   **角色分配**: `factory.sh` 裡的 Gemini 是 **Worker** (埋頭苦幹)。IDE 裡的 AI (或人類) 是 **Supervisor** (負責決策)。
-    *   **機制**: 測試失敗時，工廠會暫停。這時 Supervisor (你或是你的 IDE Agent) 可以檢查代碼、給予 Worker 新提示，或直接修復，然後按 Enter 繼續。
-*   `MODE=Single`: (預設) **YOLO 模式**。工廠會無限重試直到成功，適合去睡覺時掛機。
+
+*   `LEGO_MODE=false`: **🚀 標準模式**。無架構限制，自由發揮。
+*   `MODE=Dual`: **Supervisor 模式**。測試失敗時暫停，讓人類/IDE 介入。適合配合 Agentic IDE 使用。
+*   `MODE=Single`: **YOLO 模式**。全自動重試，適合掛機。
 
 #### 2. 重置專案 (可選)
 怕你想要測試一下，附了一個簡單計算機的開發需求，你可以直接執行 factory.sh 看看效果。
@@ -66,10 +103,10 @@ MODE=Dual
 ```
 輸入 `y` 確認後，工廠就變回一張白紙了。
 
-### 第四步：許願 (這是你最重要的工作)
+### 步驟：許願 (Make a Wish)
 只要編輯兩個檔案：
 1. **`RFP/requirements.md` (需求)**：
-   用中文寫下你要做的軟體功能。例如：「做一個匯率轉換器，輸入台幣顯示美金...」
+   用中文寫下你要做的軟體功能。
 2. **`RFP/tasks.md` (任務)**：
    把大目標拆成小步驟。例如：
    - [ ] 取得目前匯率
@@ -94,33 +131,50 @@ MODE=Dual
 ```bash
 ./factory.sh
 ```
-
-然後...你就可以去喝咖啡了 ☕️。
-你會看到 AI 開始自言自語、寫測試、寫程式、報錯、修正，直到看到綠色的 **✅ 所有測試通過** 為止。
+工廠啟動時，會自動根據 `LEGO_MODE` 設定載入對應的 AI 規範 (`.cursorrules`)。
 
 ---
 
-## ❓ 常見問題
+## 🚀 快速開始
+
+### 1. 安裝環境
+確保你有 Python 3，然後安裝依賴：
+```bash
+pip install -r requirements.txt
+```
+
+### 2. 設定專案
+打開 `factory_config.md` 確認設定：
+```markdown
+LANGUAGE=python
+LEGO_MODE=true
+```
+
+### 3. 體驗範例 (Calculator)
+我們已經預放了一塊積木 (`calculate`) 給你玩玩看，這是一個簡單的加減法計算機：
+```bash
+pytest
+```
+如果看到綠色的 `PASSED`，代表你的樂高工廠運轉正常！
+
+### 4. 開始堆積木 (如何開發)
+執行 `./factory.sh` 開始自動開發，或者手動依照以下順序告訴 AI：
+
+---
+
+## 🤖 給 AI 的指令 (Lego Mode)
+
+如果你是用 Cursor 或 Claude 開發，請確定它有讀到根目錄的 `AI_RULES.md`。
+它會知道：
+- **絕對不可以**寫超過 100 行的程式碼。
+- **一定要**先寫測試。
+- **不可以**把邏輯寫在 entry 裡。
+
+## ❓ 常見問題 (FAQ)
 
 **Q: 工廠卡住了怎麼辦？**
 A: 按 `Ctrl + C` 停止，檢查你的 `requirements.md` 寫得夠不夠清楚，然後重新執行 `./factory.sh`。
 如果你開啟了 `MODE=Dual`，它會在失敗時自動暫停等你指令。
 
 **Q: 我需要自己寫測試嗎？**
-A: **不需要！** 只要你的任務和需求寫得夠好，AI 會自動幫你產生測試 (TDD)。當然，如果你想自己寫 Gherkin 也是可以的。
-
-**Q: 這是用什麼做的？**
-A: 核心是 `cucumber-js` (測試框架) 加上 `gemini` (AI 模型)，透過 Shell Script 串接起來的自動化迴圈。
-
----
-
-## 一些背景說明（如果只想用可以不理）
-
-這個原理是 TDD (Test-Driven Development)，也就是測試驅動開發。你用 SDD 規格寫需求，而 AI 會幫你用 Gherkin 測試來驗證，這個是 BDD (Behavior-Driven Development) 的手法，而 AI 會把你的 Gherkin 檔案轉成測試檔進行測試，如果失敗，AI 會自動修正直到測試通過，所以你可以去睡覺，或是追劇。
-
-為什麼叫工廠？一個終端機裡可以跑一組 Gemini CLI，如果你的電腦夠強，可以同時開多個終端機，跑多組 Gemini CLI，就可以同時開發多個專案，你就有個程式碼生產線了。
-
-## 🙏 特別感謝
-- **Developer**: Antigravity (Google DeepMind)
-- **Model**: Gemini 2.0
-- **Concept**: Ralph Wiggum "Verification Driven Development"
+A: **不需要！** 只要你的任務和需求寫得夠好，AI 會自動幫你產生測試 (TDD)。

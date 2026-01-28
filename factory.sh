@@ -3,7 +3,8 @@
 # 用法: ./factory.sh
 
 # 1. 設定
-CONFIG_FILE="factory_config.txt"
+# 1. 設定
+CONFIG_FILE="factory_config.md"
 TASKS_FILE="RFP/tasks.md"
 REQUIREMENTS_FILE="RFP/requirements.md"
 
@@ -42,14 +43,34 @@ if [ ! -f "$CONFIG_FILE" ]; then
             ;;
     esac
 
-    echo "SCOPE=All" >> "$CONFIG_FILE"
-    echo "LANGUAGE=$LANG_VAL" >> "$CONFIG_FILE"
+    # 建立預設 factory_config.md
+    cat <<EOF > "$CONFIG_FILE"
+# Mini TDD Factory 設定檔
+SCOPE=All
+LANGUAGE=$LANG_VAL
+MODE=Dual
+LEGO_MODE=true
+EOF
     echo -e "${GREEN}✅ 設定已儲存：使用 $LANG_VAL 開發。${NC}"
 fi
 
-# 讀取設定 (如果變數不存在則使用預設值)
-SCOPE=$(grep "SCOPE=" "$CONFIG_FILE" | cut -d'=' -f2 || echo "All")
-LANGUAGE=$(grep "LANGUAGE=" "$CONFIG_FILE" | cut -d'=' -f2 || echo "javascript")
+# 讀取設定 (忽略 Markdown 註解，只讀取 KEY=VALUE)
+# 注意：這裡使用 grep 過濾掉 # 開頭的行，確保只讀取變數設定
+SCOPE=$(grep "^SCOPE=" "$CONFIG_FILE" | cut -d'=' -f2 || echo "All")
+LANGUAGE=$(grep "^LANGUAGE=" "$CONFIG_FILE" | cut -d'=' -f2 || echo "javascript")
+MODE=$(grep "^MODE=" "$CONFIG_FILE" | cut -d'=' -f2 || echo "Dual")
+LEGO_MODE=$(grep "^LEGO_MODE=" "$CONFIG_FILE" | cut -d'=' -f2 || echo "false")
+# 讀取自定義測試指令
+CONFIG_TEST_CMD=$(grep "^TEST_CMD=" "$CONFIG_FILE" | cut -d'=' -f2)
+
+# 套用樂高模式設定
+if [ "$LEGO_MODE" == "true" ]; then
+    cp .cursorrules.lego .cursorrules
+    echo -e "${GREEN}🧱 [LEGO] 樂高模式已啟用 (.cursorrules.lego)${NC}"
+else
+    cp .cursorrules.standard .cursorrules
+    echo -e "${BLUE}🚀 [STD] 標準模式 (.cursorrules.standard)${NC}"
+fi
 # 讀取自定義測試指令
 CONFIG_TEST_CMD=$(grep "TEST_CMD=" "$CONFIG_FILE" | cut -d'=' -f2)
 DESIGN_FILE="RFP/design.md"
@@ -217,7 +238,7 @@ do
 
     # Dual AI Mode: Supervisor Checkpoint
     # 如果是雙 AI 模式且測試失敗，暫停讓 Supervisor (人類) 決定是否插手
-    MODE=$(grep "MODE=" "$CONFIG_FILE" | cut -d'=' -f2)
+    MODE=$(grep "^MODE=" "$CONFIG_FILE" | cut -d'=' -f2)
     
     if [[ "$MODE" == "Dual" ]]; then
         echo -e "${BLUE}🕵️ [Dual AI Mode] Supervisor Checkpoint${NC}"
