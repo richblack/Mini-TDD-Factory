@@ -101,31 +101,44 @@ LEGO_MODE=true
 
 按照前面說明你應該可以開始了，如果想理解更多，請看以下說明。
 
-### 自動開發
+### 自動開發原理：The Ralph Wiggum Loop
 
-這裡採用的是 **The Magic Loop (自動修正迴圈)** 機制：
-工廠啟動後，它會進入一個 **「寫測試 -> 寫程式 -> 修正」** 的無限迴圈：
+這裡採用的核心機制稱為 **The Ralph Wiggum Loop** (致敬 *The Simpsons* 中鍥而不捨的角色 Ralph)：
 
+> **"I'm helping!" - Ralph Wiggum**
+
+這個概念由 Geoffrey Huntley 提出，核心精神是 **「外部驗證驅動 (External Verification Driven)」**。
+我們不相信 AI 說的「我做好了」，我們只相信「測試通過」。
+
+工廠啟動後，會進入一個無限迴圈：
 1.  **AI 嘗試寫程式**。
 2.  **跑測試**：如果有紅燈 (錯誤)，AI 會看到錯誤訊息。
 3.  **自動修正**：AI 會根據錯誤，自己修改程式碼，然後**再跑一次**。
-4.  **直到綠燈**：直到所有測試都通過，它才會停下來跟你邀功。
-> 簡單說：**它會自己 debug，直到做對為止。**
+4.  **直到綠燈**：直到所有測試都通過，它才會停下來。
 
-### 樂高式開發
+這個 Loop 確保了 AI 不會因為「自我感覺良好」而自嗨，它必須通過嚴格的外部檢查才能交卷。
 
-為了實踐 **「解耦重構 (Refactor-Ready)」**，我們在 [`course/lego.md`](course/lego.md) 中定義了更詳細的規範：
+### 樂高式開發：解耦重構 (Decoupled Refactoring)
 
-1.  **原則一 (小)**：禁止寫任何超過 100 行的檔案。
-2.  **原則二 (序)**：先定義資料 (`contracts`)，再寫測試 (`tests`)，最後才實作 (`actions`)。
-3.  **原則三 (淨)**：程式碼必須是「無狀態 (Stateless)」的。
-4.  **原則四 (換)**：只要測試不通過，該積木就視為失敗，直接重寫比除錯快。
+為什麼要用樂高法？因為 **AI 寫程式很快，但維護很爛**。
 
-這樣做的好處是，我們不再維護龐大的原始碼，而是維護「需求」與「積木」。
+當專案變大時，AI 往往會改 A 壞 B，這是因為程式碼之間「牽一髮動全身 (Coupling)」。
+**樂高式開發 (Lego Methodology)** 的核心就是 **解耦重構**：
+
+*   **AI 開發優勢**：它可以一秒鐘寫出 50 行完美的程式碼。
+*   **AI 維護劣勢**：給它 2000 行程式碼，它會頭暈，改錯機率大增。
+
+**策略**：
+我們將軟體拆解成無數個極小的 **「原子化」積木**。
+*   每個積木 (Action) 都是獨立的、無狀態的、有明確輸入輸出的。
+*   **優點**：當一個功能壞掉時，我們**不修它**。我們直接把那個積木拔掉，叫 AI **「重做一個新的」** 塞回去。
+*   **結果**：你不需要擔心歷史包袱，永遠保持程式碼跟新的一樣乾淨。
+
+想了解更多原則 (小、序、淨、換)，請參考 [`course/lego.md`](course/lego.md)。
 
 ---
 
 ## 🙏 特別感謝
 - **Developer**: Antigravity (Google DeepMind)
 - **Model**: Gemini 2.0
-- **Concept**: Ralph Wiggum "Verification Driven Development"
+- **Concept**: Geoffrey Huntley "Ralph Wiggum Loop" (Verification Driven Development)
