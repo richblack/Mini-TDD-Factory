@@ -17,18 +17,25 @@ Worker AI 使用的引擎。
 `claude`: Claude Code (claude -p --dangerously-skip-permissions)
 AI_ENGINE=gemini
 
-## 4. 監工模式 (Supervisor)
+## 4. AI 模型 (AI Model)
+指定 Worker 和 Supervisor 使用的模型 (留空則使用各引擎預設值)。
+Gemini 範例: `gemini-2.5-pro`, `gemini-2.5-flash`
+Claude 範例: `opus`, `sonnet`
+WORKER_MODEL=
+SUPERVISOR_MODEL=
+
+## 5. 監工模式 (Supervisor)
 `none`: 無監工，只靠 bash 腳本判斷。
 `claude`: Claude Code 當監工，每輪審查 Worker 回報。
 `gemini`: Gemini CLI 當監工。
 SUPERVISOR=none
 
-## 5. 工作模式 (Operation Mode)
+## 6. 工作模式 (Operation Mode)
 `Single`: YOLO 模式，全自動無限重試 (適合掛機)。
 `Dual`: Supervisor 模式，測試失敗時暫停，讓人類介入。
 MODE=Dual
 
-## 6. 樂高模式 (Lego Mode)
+## 7. 樂高模式 (Lego Mode)
 是否啟用嚴格的「樂高法」開發規範？
 `true`: 啟用，強制一檔一事、Contracts First。
 `false`: 停用，一般 TDD 開發。
