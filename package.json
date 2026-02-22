@@ -1,10 +1,10 @@
 {
-    "name": "minimal-factory-test",
-    "version": "1.0.0",
-    "description": "簡易版 Gemini 自動化軟體工廠測試環境",
-    "main": "calculator.js",
+    "name": "mini-tdd-factory",
+    "version": "2.0.0",
+    "description": "Mini TDD Factory - AI 自動化軟體工廠 (Ralph Wiggum Loop)",
     "scripts": {
-        "test": "cucumber-js"
+        "test": "cucumber-js",
+        "factory": "./factory.sh"
     },
     "dependencies": {
         "@cucumber/cucumber": "^10.0.0"
