@@ -130,7 +130,7 @@ SUPERVISOR_MODEL=opus
 | AI_ENGINE | Worker AI 引擎 | gemini | gemini / claude |
 | WORKER_MODEL | Worker 使用的模型 | (引擎預設) | 見各引擎文件 |
 | SUPERVISOR_MODEL | 監工使用的模型 | (引擎預設) | 見各引擎文件 |
-| SUPERVISOR | 監工引擎 | none | none / claude / gemini |
+| SUPERVISOR | 監工引擎 | claude | claude / gemini / none |
 | MODE | 工作模式 | Dual | Single (全自動) / Dual (失敗時暫停) |
 | LEGO_MODE | 樂高法規範 | true | true / false |
 | TEST_CMD | 自定義測試指令 | (自動偵測) | 任意 shell 指令 |

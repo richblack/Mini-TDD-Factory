@@ -25,10 +25,10 @@ WORKER_MODEL=
 SUPERVISOR_MODEL=
 
 ## 5. 監工模式 (Supervisor)
-`none`: 無監工，只靠 bash 腳本判斷。
-`claude`: Claude Code 當監工，每輪審查 Worker 回報。
+`claude`: Claude Code 當監工，每輪審查 Worker 回報 [預設]。
 `gemini`: Gemini CLI 當監工。
-SUPERVISOR=none
+`none`: 無監工，只靠 bash 腳本判斷 (進階使用者)。
+SUPERVISOR=claude
 
 ## 6. 工作模式 (Operation Mode)
 `Single`: YOLO 模式，全自動無限重試 (適合掛機)。

@@ -43,12 +43,12 @@ cd Mini-TDD-Factory
 
 ## 想知道現在做到哪了？
 
-工廠跑的時候你不用盯著看，想知道進度時：
+工廠預設會有一個 AI 監工 (Claude Code) 幫你盯著。它每輪都會看 Worker 做了什麼，方向不對會自動糾正，真的搞不定才會停下來通知你。
 
-- 打開 `.factory/latest_report.md` — 最新一輪的狀態
-- 打開 `.factory/history.md` — 完整歷史
+你不用看 log，想知道進度隨時打開 `.factory/latest_report.md` 就好。
 
-你也可以設一個 AI 監工幫你盯（詳見[技術文件](docs/technical.md#監工模式)）。
+> 不想要監工？在 `factory_config.md` 把 `SUPERVISOR=claude` 改成 `SUPERVISOR=none`。
+> 詳見[技術文件](docs/technical.md#監工模式)。
 
 ---
 
@@ -60,7 +60,7 @@ cd Mini-TDD-Factory
 |------|------|--------|
 | LANGUAGE | 開發語言 | python |
 | AI_ENGINE | 做事的 AI (gemini/claude) | gemini |
-| SUPERVISOR | 監工 AI (none/claude/gemini) | none |
+| SUPERVISOR | 監工 AI (claude/gemini/none) | claude |
 | MODE | Single (全自動) / Dual (失敗暫停) | Dual |
 | LEGO_MODE | 樂高法規範 | true |
 

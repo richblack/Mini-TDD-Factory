@@ -64,15 +64,15 @@ if [ ! -f "$CONFIG_FILE" ]; then
     # 選擇監工
     echo ""
     echo "請選擇監工 (Supervisor)："
-    echo "1) 無監工 [預設]"
-    echo "2) Claude Code 當監工"
-    echo "3) Gemini CLI 當監工"
+    echo "1) Claude Code 當監工 [預設] — AI 幫你盯進度，有問題自動處理"
+    echo "2) Gemini CLI 當監工"
+    echo "3) 無監工 (進階使用者)"
     read -p "請輸入選項 (1-3): " super_choice
 
     case "$super_choice" in
-        2) SUPER_VAL="claude" ;;
-        3) SUPER_VAL="gemini" ;;
-        *) SUPER_VAL="none" ;;
+        2) SUPER_VAL="gemini" ;;
+        3) SUPER_VAL="none" ;;
+        *) SUPER_VAL="claude" ;;
     esac
 
     cat <<EOF > "$CONFIG_FILE"
