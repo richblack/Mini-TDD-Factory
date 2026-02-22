@@ -5,23 +5,31 @@
 請只修改 `=` 後面的數值。
 
 ## 1. 開發範圍 (Scope)
-設定要修改的檔案範圍。
-`All`: 允許 AI修改整個專案 (推薦)。
-`Specific`: 僅允許修改特定檔案 (進階)。
 SCOPE=All
 
 ## 2. 程式語言 (Language)
-指定您的專案語言。
-支援: `javascript`, `python`, `go`，或自定義語言。
-LANGUAGE=javascript
+支援: `python`, `javascript`, `go`，或自定義語言。
+LANGUAGE=python
 
-## 3. 工作模式 (Operation Mode)
+## 3. AI 引擎 (AI Engine)
+Worker AI 使用的引擎。
+`gemini`: Gemini CLI (gemini --yolo)
+`claude`: Claude Code (claude -p --dangerously-skip-permissions)
+AI_ENGINE=gemini
+
+## 4. 監工模式 (Supervisor)
+`none`: 無監工，只靠 bash 腳本判斷。
+`claude`: Claude Code 當監工，每輪審查 Worker 回報。
+`gemini`: Gemini CLI 當監工。
+SUPERVISOR=none
+
+## 5. 工作模式 (Operation Mode)
 `Single`: YOLO 模式，全自動無限重試 (適合掛機)。
-`Dual`: Supervisor 模式，測試失敗時暫停，讓人類介入 (適合搭配 Agentic IDE)。
+`Dual`: Supervisor 模式，測試失敗時暫停，讓人類介入。
 MODE=Dual
 
-## 4. 樂高模式 (Lego Mode)
+## 6. 樂高模式 (Lego Mode)
 是否啟用嚴格的「樂高法」開發規範？
-`true`: 啟用 (.cursorrules.lego)，強制一檔一事、Contracts First。
-`false`: 停用 (.cursorrules.standard)，一般 TDD 開發。
+`true`: 啟用，強制一檔一事、Contracts First。
+`false`: 停用，一般 TDD 開發。
 LEGO_MODE=true
