@@ -1,22 +1,23 @@
 # System
 .DS_Store
 
-# Logs
-*.log
-test_report.log
-
 # Dependencies
 node_modules/
 __pycache__/
-
-# Course Material (Ignored)
-course/
-
-# Python Testing
 .pytest_cache/
 *.pyc
 
-# Dynamic Config
+# Factory runtime
+.factory/
 .cursorrules
-
+test_report.log
+test_report.raw
 *.log
+
+# Python
+*.egg-info/
+dist/
+build/
+
+# Go
+vendor/
